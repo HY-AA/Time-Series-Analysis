@@ -1,3 +1,4 @@
+Time Series Analysis Project
 This project focuses on conducting a comprehensive time series analysis of monthly
 oat producer delivery data in British Columbia, ranging from January 1982 to December
 2022. The primary goal is to select and fit an accurate forecasting model, utilizing ARIMA
