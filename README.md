@@ -1,34 +1,55 @@
-# Time Series Analysis Project
-This project focuses on conducting a comprehensive time series analysis of monthly
-oat producer delivery data in British Columbia, ranging from January 1982 to December
-2022. The primary goal is to select and fit an accurate forecasting model, utilizing ARIMA
-methodology, to predict future oat production in the province.
+# Oats Production Forecasting in BC
 
+## Overview
 
-Our data was sourced from Statistics Canada, covering monthly producer deliveries of
-major grains, with an emphasis on the production of oats. The dataset excludes observations
-outside the specified time frame (i.e., observations prior to 1982 and observations after 2022)
-to ensure accurate handling of potential seasonality in the analysis.
-To ensure the proper application of an ARIMA model with seasonal components, our
-model fulfills the following key assumptions:
+This project analyzes and forecasts the production of oats in British Columbia using time series analysis techniques. The dataset contains historical oats production data from 1982 to 2022. The project utilizes R libraries for data manipulation, visualization, and forecasting.
 
+## Methodology
 
-1. Weak stationarity - the time series exhibits constant mean and variance over time.
-2. Independent observations – the autocorrelation values of the observations do not
-exhibit observable patterns that comprise our inferences.
-3. Homoscedasticity – the variances of residuals of our fitted seasonal model remain
-constant over time.
-4. Normality of residuals – the residuals follow approximately a normal distribution.
-5. Large sample size – our fitted seasonal ARIMA model used a sufficient number of
-data points (monthly data collected for over four decades) to produce reliable
-parameter estimates.
+### 1 Data Preprocessing:
 
+The dataset is imported and filtered to include data from December 1981 to December 2022.
 
-The methods employed to select and fit a seasonal ARIMA model for forecasting
-future oats production in BC begin with visualization of the time series data, allowing for the
-identification of trends and seasonality. Then we proceeded with caution to determine the
-proper orders of the seasonal ARIMA model with the aid of ACF, PACF, and EACF plots
-after differencing the model to ensure that we meet the stationarity assumption. Subsequently,
-we conducted parameter estimation with the help of statistical software to optimize likelihood
-functions. We also conducted the diagnostic analysis to validate the chosen SARIMA model.
-Finally, we made predictions with two different
+The columns are renamed for better readability (REF_DATE → Date, VALUE → Oats).
+
+### 2 Visualization:
+
+A time series plot is generated using ggplot2, including a trend line.
+
+### 3 Time Series Analysis:
+
+The oats production data is converted into a time series (ts) object with a monthly frequency.
+
+The Autocorrelation Function (ACF) and Partial Autocorrelation Function (PACF) are plotted to examine dependencies at different lags.
+
+The Extended Autocorrelation Function (EACF) is computed to determine potential ARMA model orders.
+
+The Augmented Dickey-Fuller (ADF) test is performed to check for stationarity.
+
+### 4 Model Selection & Fitting:
+
+First differencing is applied if the data is non-stationary.
+
+The best ARIMA model is selected using auto.arima().
+
+A manual ARIMA(3,1,1) * Seasonal ARIMA(1,0,1) model is fitted using Maximum Likelihood Estimation (MLE).
+
+Model residuals are analyzed via plots, histograms, and QQ plots to assess model adequacy.
+
+### 5 Forecasting:
+
+A 12-month forecast is generated with confidence levels of 90% and 50%.
+
+The forecast results are visualized.
+
+## Required Libraries
+
+``` R
+library(TSA)
+library(stats)
+library(tidyverse)
+library(readxl)
+library(forecast)
+library(tseries)
+library(lubridate)
+```
